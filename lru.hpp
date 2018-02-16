@@ -126,18 +126,5 @@ class LRUCache {
 			head = cur;
 			head->prev = nullptr;
 		}
-		void print() {
-			node *tmp = head;
-			printf("new print link:");
-			while(tmp) {
-				printf("%d ",tmp->value);
-				tmp = tmp->next;
-			}
-			printf("\nprint map:");
-			for(auto it=key_node_map.begin();it!=key_node_map.end();it++) {
-				printf("[%d=%d] ",it->second->key, it->second->value);
-			}
-			printf("\n");
-		}
 };
 
