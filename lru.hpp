@@ -17,7 +17,7 @@
 
 using namespace std;
 
-
+template<typename TypeKey = int,typename TypeValue = int>
 class LRUCache {
 public:
     LRUCache(int capacity) {
@@ -36,18 +36,18 @@ public:
 		node_size = 0;
 	}
     
-    int get(int key) {
+    TypeValue get(TypeKey key) {
 		auto it = key_node_map.find(key);
 		if(it != key_node_map.end()) {
 			node* cur = it->second;	
-			int value = cur->value;
+			TypeValue value = cur->value;
 			move_to_head(cur,cur->key, value);
 			return value;
         }
         return -1;
     }
     
-    void put(int key, int value) {
+    void put(TypeKey key, TypeValue value) {
 		auto it = key_node_map.find(key);
 		if(it != key_node_map.end()) {
 			//update value and move the node to head
@@ -63,13 +63,13 @@ public:
 			if(head==nullptr) {
 				head = cur;
 				tail = cur;
-				key_node_map.insert(pair<int,node*>(key,cur));
+				key_node_map.insert(pair<TypeKey,node*>(key,cur));
 				return;
 			}
 			cur->next= head;
 			head->prev = cur;
 			head = cur;
-			key_node_map.insert(pair<int,node*>(key,cur));
+			key_node_map.insert(pair<TypeKey,node*>(key,cur));
 			return;
 		}
 
@@ -78,11 +78,11 @@ public:
 		it = key_node_map.find(tail->key);
 		if(it != key_node_map.end()) key_node_map.erase(it);
 		move_to_head(tail,key,value); 
-		key_node_map.insert(pair<int,node*>(key,head));
+		key_node_map.insert(pair<TypeKey,node*>(key,head));
     }
     struct node {
-		int key;
-		int value;
+		TypeKey key;
+		TypeValue value;
 		struct node* prev;
 		struct node* next;
 		~node() {
@@ -93,11 +93,11 @@ public:
 
 private:
     int cap;
-    map<int, node*> key_node_map;
+    map<TypeKey, node*> key_node_map;
 	node* head{nullptr};
 	node* tail{nullptr};
     int node_size = 0;
-	void move_to_head(node* cur,int key, int value) {
+	void move_to_head(node* cur,TypeKey key, TypeValue value) {
 		if(cur->prev == nullptr) {
 			//locate at the head, do nothing
 			cur->value = value;
