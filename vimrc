@@ -1,3 +1,4 @@
+" git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 set encoding=utf-8
 set nocompatible              " required
 set ts=4
